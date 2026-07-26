@@ -1,0 +1,132 @@
+# Data
+data/
+*.csv
+*.npz
+*.pt
+*.pkl
+
+# Output
+output/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# CatBoost
+catboost_info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Paper manuscript (unpublished; bin/docx/text dumps)
+paper/
+
+# Reference papers (copyrighted PDFs/images)
+ref_papers/
+
+# Temporary audit/debug artifacts
+temp/
+
+# Docx inspection artifacts
+docx_inspect/
+
+# User screenshots / uploaded images
+user_image*.png
+
+# Extracted text dumps
+paper_extracted_text.txt
+extracted_tables.txt
+doc_structure.txt
+
+# Test artifacts
+test_stdout.txt
+test_stderr.txt
+
+# Paper/docx audit outputs
+audit_report.md
+*_output.md
+reference_review_report.md
+
+# Paper writing / manuscript generation evidence (AI-written paper)
+scripts/
+scripts_dev/
+*aigc*
+audit_content_language*
+audit_docx_report*
+audit_figures_tables*
+audit_format_layout*
+audit_formula*
+fix_p0_issues*
+review_docx*
+clean_paper*
+modify_paper*
+remove_cost_analysis*
+replace_fig*
+edit_paper*
+embed_figures*
+extract_key_tables*
+extract_references*
+extract_tables*
+inspect_formula*
+map_docx_structure*
+check_caption_table*
+
+# Paper-specific scripts (figures, statistics, assets)
+experiments/spc_stratified_analysis*
+experiments/build_canonical_oof_pool*
+experiments/plot_training_curves*
+experiments/v3_campaign_report*
+experiments/paper_*
+experiments/prepare_paper_*
+experiments/check_paper_*
+experiments/render_drawio_*
+experiments/statistical_tests*
+experiments/fix_statistical_tests*
+experiments/update_final_report*
+experiments/update_spc_finalblend*
+experiments/plot_hard_case_distribution*
+experiments/audit_review_diagnostics*
+experiments/v3_audit_provenance*
+experiments/v3_fig7_paper*
+experiments/worklog*
+experiments/archive/update_bsc_etd_paper*
+experiments/archive/update_sci_paper*
+experiments/archive/update_thesis_ablation*
+
+# Temp/backup files
+*~
+*.bkp
+*.bak
+.*.bkp
+
+# Paper figures (TIFF/PDF/PNG/SVG plots; keep only architecture diagrams)
+figures/fig*.tiff
+figures/fig*.pdf
+figures/fig*.png
+figures/fig*.svg
+figures/fig*.drawio
+figures/v3_flipped_samples.png
+figures/*_frontier_*.png
+figures/hard_case_distribution.png
+figures/hillclimb_*.png
+figures/paper_*.drawio
+figures/paper_*.png
+figures/paper_*.svg
+
+# Supplementary data (open-access for paper reproducibility)
+!supplementary/
+!supplementary/**/*

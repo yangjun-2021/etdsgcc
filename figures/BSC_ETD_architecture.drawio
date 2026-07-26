@@ -1,0 +1,338 @@
+<mxfile host="app.diagrams.net" modified="2026-07-22T12:00:00.000Z" agent="BSC-ETD Architecture Generator" version="22.1.0" etag="bsc_etd_v2" type="device">
+  <diagram name="BSC-ETD架构图" id="bsc-etd-arch">
+    <mxGraphModel dx="1800" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- ==================== 背景层 ==================== -->
+        <mxCell id="title" value="&lt;b&gt;图1  BSC-ETD五阶段双层选择性分类检测框架&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;11&quot;&gt;Fig.1  Five-stage bi-level selective classification framework for electricity theft detection&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontFamily=SimHei;" vertex="1" parent="1">
+          <mxGeometry x="400" y="10" width="800" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== 阶段1：数据输入与预处理 ==================== -->
+        <mxCell id="stage1_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F4FD;strokeColor=#5B9BD5;strokeWidth=2;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="1520" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="stage1_label" value="&lt;b&gt;阶段1  数据输入与预处理&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot; color=&quot;#666666&quot;&gt;Stage 1: Data Input &amp;amp; Preprocessing&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontFamily=SimHei;" vertex="1" parent="1">
+          <mxGeometry x="55" y="75" width="200" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sgcc_data" value="&lt;b&gt;SGCC数据集&lt;/b&gt;&lt;br&gt;42,372户 x 1,035天&lt;br&gt;窃电率 8.53%&lt;br&gt;缺失率 25.6%&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;5通道日用电序列&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;strokeWidth=1.5;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="80" y="110" width="140" height="75" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="oedi_data" value="&lt;b&gt;OEDI数据集&lt;/b&gt;&lt;br&gt;16类建筑 x 小时级负荷&lt;br&gt;6类仿真窃电模式&lt;br&gt;正类率 34.38%&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;11通道时序窗口&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#70AD47;strokeWidth=1.5;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="240" y="110" width="140" height="75" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="preprocess" value="&lt;b&gt;数据预处理&lt;/b&gt;&lt;br&gt;• 三层插补（线性-季节性-邻域）&lt;br&gt;• Winsorize + log1p变换&lt;br&gt;• 标准化（每折独立）&lt;br&gt;• 5折分层交叉验证&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;防数据泄漏协议&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#ED7D31;strokeWidth=1.5;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="420" y="105" width="200" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="feature_eng" value="&lt;b&gt;特征构建&lt;/b&gt;&lt;br&gt;• 353维统计特征&lt;br&gt;• FFT/EMD频域特征&lt;br&gt;• 同/环比特征&lt;br&gt;• 深度自动特征&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;X_seq[N,C,T] + stat_feat&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;strokeWidth=1.5;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="660" y="105" width="170" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="raw_seq" value="&lt;b&gt;原始序列&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;Raw Sequence&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0288D1;strokeWidth=1.5;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="870" y="105" width="100" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="a1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="sgcc_data" target="preprocess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="oedi_data" target="preprocess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="preprocess" target="feature_eng">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0288D1;strokeWidth=1.5;strokeDasharray=5,5;endArrow=block;endFill=1;" edge="1" parent="1" source="preprocess" target="raw_seq">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== 阶段2：两级专家级联 ==================== -->
+        <mxCell id="stage2_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#9C27B0;strokeWidth=2;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="220" width="1520" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="stage2_label" value="&lt;b&gt;阶段2  两级专家级联（OOF预测）&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot; color=&quot;#666666&quot;&gt;Stage 2: Two-level Expert Cascade (Out-of-Fold Prediction)&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontFamily=SimHei;" vertex="1" parent="1">
+          <mxGeometry x="55" y="225" width="300" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="expert_a_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#5B9BD5;strokeWidth=2;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="260" width="320" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="expert_a_title" value="&lt;b&gt;Expert A：异构GBDT集成&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;Heterogeneous GBDT Ensemble&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontFamily=SimHei;" vertex="1" parent="1">
+          <mxGeometry x="80" y="263" width="320" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="lgb" value="LightGBM&lt;br&gt;&lt;font size=&quot;9&quot;&gt;depth=7, lr=0.03&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#5B9BD5;strokeWidth=1;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="95" y="295" width="85" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="xgb" value="XGBoost&lt;br&gt;&lt;font size=&quot;9&quot;&gt;depth=6, lr=0.03&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#70AD47;strokeWidth=1;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="195" y="295" width="85" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="catb" value="CatBoost&lt;br&gt;&lt;font size=&quot;9&quot;&gt;depth=7, lr=0.03&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#ED7D31;strokeWidth=1;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="295" y="295" width="85" height="45" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="expert_a_out" value="&lt;b&gt;OOF概率 p_A&lt;/b&gt;&lt;br&gt;+ GBDT叶索引&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;Leaf Indices [N,100]&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0288D1;strokeWidth=1.5;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="150" y="355" width="170" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="a_lgb" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#5B9BD5;strokeWidth=1;endArrow=block;endFill=1;" edge="1" parent="1" source="lgb" target="expert_a_out">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_xgb" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#70AD47;strokeWidth=1;endArrow=block;endFill=1;" edge="1" parent="1" source="xgb" target="expert_a_out">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_catb" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ED7D31;strokeWidth=1;endArrow=block;endFill=1;" edge="1" parent="1" source="catb" target="expert_a_out">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="expert_b_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9C27B0;strokeWidth=2;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="440" y="260" width="380" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="expert_b_title" value="&lt;b&gt;Expert B：TCN + Leaf Embedding&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;Temporal Convolutional Network with Leaf-aware Gating&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontFamily=SimHei;" vertex="1" parent="1">
+          <mxGeometry x="440" y="263" width="380" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="tcn_block" value="&lt;b&gt;TCN编码器&lt;/b&gt;&lt;br&gt;4层因果扩张卷积&lt;br&gt;[32-32-32-16]&lt;br&gt;核大小5, Dropout 0.2&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;dilation=2^i&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#9C27B0;strokeWidth=1;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="460" y="300" width="120" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="leaf_embed" value="&lt;b&gt;Leaf Embedding&lt;/b&gt;&lt;br&gt;100 trees x 64 leaves&lt;br&gt;embed_dim=4&lt;br&gt;output_dim=64&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;门控: sigma(Linear)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3F51B5;strokeWidth=1;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="600" y="300" width="110" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="expert_b_out" value="&lt;b&gt;OOF概率 p_B&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;Asymmetric Focal Loss&lt;br&gt;alpha=0.85, gamma=2.0&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0288D1;strokeWidth=1.5;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="740" y="320" width="100" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="a_tcn_b" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9C27B0;strokeWidth=1;endArrow=block;endFill=1;" edge="1" parent="1" source="tcn_block" target="expert_b_out">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_leaf_b" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3F51B5;strokeWidth=1;endArrow=block;endFill=1;" edge="1" parent="1" source="leaf_embed" target="expert_b_out">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="cascade_a_b" value="&lt;font size=&quot;9&quot;&gt;先验概率 + 叶索引&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;Prior + Leaf Indices&lt;/font&gt;&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D81B60;strokeWidth=2;strokeDasharray=5,3;endArrow=block;endFill=1;fontSize=9;fontFamily=SimSun;" edge="1" parent="1" source="expert_a_out" target="leaf_embed">
+          <mxGeometry x="0.5" y="15" relative="1" as="geometry">
+            <mxPoint x="15" y="0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="expert_cd_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#999999;strokeWidth=1.5;strokeDasharray=5,5;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="860" y="260" width="280" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="expert_cd_title" value="&lt;b&gt;Expert C/D：扩展专家（可选）&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#999999&quot;&gt;Extended Experts (Optional)&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontFamily=SimHei;" vertex="1" parent="1">
+          <mxGeometry x="860" y="263" width="280" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="expert_c" value="Informer&lt;br&gt;&lt;font size=&quot;9&quot;&gt;ProbSparse Attention&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;strokeWidth=1;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="880" y="300" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="expert_d" value="MultiScaleCNN&lt;br&gt;&lt;font size=&quot;9&quot;&gt;1D多尺度卷积&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F7FA;strokeColor=#00ACC1;strokeWidth=1;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="300" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="expert_cd_out" value="OOF概率 p_C, p_D..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#999999;strokeWidth=1;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="920" y="360" width="140" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="a_stage1_2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="745" y="200" as="sourcePoint" />
+            <mxPoint x="745" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- ==================== 阶段3：OOF特征池与元学习 ==================== -->
+        <mxCell id="stage3_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#ED7D31;strokeWidth=2;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="440" width="1520" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="stage3_label" value="&lt;b&gt;阶段3  OOF预测概率特征池与元学习&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot; color=&quot;#666666&quot;&gt;Stage 3: OOF Probabilistic Feature Pool &amp;amp; Meta-Learning&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontFamily=SimHei;" vertex="1" parent="1">
+          <mxGeometry x="55" y="445" width="350" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="oof_pool" value="&lt;b&gt;OOF概率特征池&lt;/b&gt;&lt;br&gt;P in R^(NxK)&lt;br&gt;K=46路异构信号&lt;br&gt;5类来源&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;OOF Probabilistic Feature Pool&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#EF6C00;strokeWidth=2;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="80" y="485" width="150" height="105" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="greedy_sel" value="&lt;b&gt;贪心前向集成选择&lt;/b&gt;&lt;br&gt;Forward Selection&lt;br&gt;Corr&lt;0.9999&lt;br&gt;MaxSize=15&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;最大化边际F1增益&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;strokeWidth=1.5;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="270" y="490" width="140" height="95" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="nnls" value="&lt;b&gt;NNLS加权优化&lt;/b&gt;&lt;br&gt;Non-negative&lt;br&gt;Least Squares&lt;br&gt;w &gt;= 0&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;min ||Pw - y||^2&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#43A047;strokeWidth=1.5;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="450" y="495" width="120" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="meta_learners" value="&lt;b&gt;二级元学习器组&lt;/b&gt;&lt;br&gt;• XGBoost (depth=4,3)&lt;br&gt;• LogisticReg (C=1.0,0.5)&lt;br&gt;• LightGBM (depth=3)&lt;br&gt;• HistGradientBoosting&lt;br&gt;• Simple Average&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;Best-F1择优&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;strokeWidth=1.5;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="610" y="485" width="170" height="105" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="threshold_opt" value="&lt;b&gt;阈值优化&lt;/b&gt;&lt;br&gt;• Best-F1搜索&lt;br&gt;• BDR最大化&lt;br&gt;• FPR约束&lt;br&gt;[0.05, 0.95] 步长0.005&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;Threshold Optimization&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#C2185B;strokeWidth=1.5;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="820" y="490" width="160" height="95" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="meta_out" value="&lt;b&gt;集成预测概率&lt;/b&gt;&lt;br&gt;p_meta in [0,1]&lt;br&gt;AUC=0.9874&lt;br&gt;F1=0.8666&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;Ensemble Prediction&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="490" width="140" height="95" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="a_oof_greedy" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="oof_pool" target="greedy_sel">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_greedy_nnls" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="greedy_sel" target="nnls">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_nnls_meta" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="nnls" target="meta_learners">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_meta_thresh" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="meta_learners" target="threshold_opt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_thresh_out" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="threshold_opt" target="meta_out">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="a_stage2_3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="235" y="420" as="sourcePoint" />
+            <mxPoint x="235" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_stage2_3b" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="630" y="420" as="sourcePoint" />
+            <mxPoint x="155" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a_stage2_3c" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#999999;strokeWidth=1.5;strokeDasharray=5,5;endArrow=block;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1000" y="420" as="sourcePoint" />
+            <mxPoint x="155" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- ==================== 阶段4：双层选择性分类 ==================== -->
+        <mxCell id="stage4_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#43A047;strokeWidth=2;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="630" width="1520" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="stage4_label" value="&lt;b&gt;阶段4  双层选择性分类&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot; color=&quot;#666666&quot;&gt;Stage 4: Bi-level Selective Classification&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontFamily=SimHei;" vertex="1" parent="1">
+          <mxGeometry x="55" y="635" width="250" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="conformal_gate" value="&lt;b&gt;第一层：边际共形预测门控&lt;/b&gt;&lt;br&gt;Split Conformal Prediction&lt;br&gt;alpha = 0.10（名义覆盖率90%）&lt;br&gt;实证覆盖率 approx 90.0%&lt;br&gt;条件精度 0.9950&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;高置信样本自动放行&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="80" y="670" width="220" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="topk_review" value="&lt;b&gt;第二层：错误风险排序（Top-K审查）&lt;/b&gt;&lt;br&gt;低置信度样本按审查优先级降序排列&lt;br&gt;Top-1%稽查：精确率 1.000&lt;br&gt;Top-2%稽查：召回率 23.5%&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;资源受限下的高风险用户精准稽查&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#E64A19;strokeWidth=2;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="340" y="670" width="280" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sel_out" value="&lt;b&gt;选择性分类输出&lt;/b&gt;&lt;br&gt;• 高置信自动判别（~90%样本）&lt;br&gt;• 中置信分级审查队列&lt;br&gt;• 低置信人工稽查优先&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;Selective Classification Output&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B3E5FC;strokeColor=#0288D1;strokeWidth=2;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="660" y="670" width="220" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="a_conf_topk" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="conformal_gate" target="topk_review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_topk_sel" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="topk_review" target="sel_out">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="a_stage3_4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1090" y="610" as="sourcePoint" />
+            <mxPoint x="1090" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- ==================== 阶段5：输出与评估 ==================== -->
+        <mxCell id="stage5_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#E53935;strokeWidth=2;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="790" width="1520" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="stage5_label" value="&lt;b&gt;阶段5  输出与评估&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot; color=&quot;#666666&quot;&gt;Stage 5: Output &amp;amp; Evaluation&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontFamily=SimHei;" vertex="1" parent="1">
+          <mxGeometry x="55" y="795" width="200" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="eval_metrics" value="&lt;b&gt;评估指标&lt;/b&gt;&lt;br&gt;AUC = 0.9874  |  F1 = 0.8666  |  AP = 0.5776&lt;br&gt;Recall = 0.8254  |  Precision = 0.8792&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;5-fold CV, Nadeau-Bengio校正t检验&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E53935;strokeWidth=1.5;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="80" y="820" width="380" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="deploy" value="&lt;b&gt;工程部署资产&lt;/b&gt;&lt;br&gt;模型权重 + 推理接口 + 更新策略&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;353维统计特征 + 1路OOF生成器 - F1 approx 0.85&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E53935;strokeWidth=1.5;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="500" y="820" width="320" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="label_noise" value="&lt;b&gt;标签噪声分析&lt;/b&gt;&lt;br&gt;上限F1 approx 0.87-0.90 | 自我印证膨胀~10%&lt;br&gt;&lt;font size=&quot;9&quot; color=&quot;#666666&quot;&gt;OEDI平行验证: F1=1.0000 (无噪标签)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E53935;strokeWidth=1.5;fontSize=11;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="850" y="820" width="320" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="a_stage4_5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="770" y="770" as="sourcePoint" />
+            <mxPoint x="770" y="790" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- ==================== 图例 ==================== -->
+        <mxCell id="legend_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#CCCCCC;strokeWidth=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="40" y="885" width="1520" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend_title" value="&lt;b&gt;图例 Legend&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=SimHei;" vertex="1" parent="1">
+          <mxGeometry x="55" y="890" width="80" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="leg1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F4FD;strokeColor=#5B9BD5;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="140" y="892" width="20" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1_t" value="数据层 Data Layer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="165" y="890" width="110" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="leg2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#9C27B0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="290" y="892" width="20" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2_t" value="专家层 Expert Layer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="315" y="890" width="110" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="leg3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#ED7D31;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="440" y="892" width="20" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3_t" value="元学习层 Meta-Learning Layer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="465" y="890" width="150" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="leg4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#43A047;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="630" y="892" width="20" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4_t" value="选择性分类层 Selective Classification" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="655" y="890" width="180" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="leg5" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#E53935;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="850" y="892" width="20" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="leg5_t" value="输出层 Output Layer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="875" y="890" width="110" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="leg6" value="——" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="890" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg6_t" value="主流程数据流 Main Data Flow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="890" width="160" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="leg7" value="- - -" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="890" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg7_t" value="可扩展分支/级联连接 Optional/Extended" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=SimSun;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="890" width="210" height="20" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

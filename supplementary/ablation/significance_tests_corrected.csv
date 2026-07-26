@@ -1,0 +1,5 @@
+comparison,F1_A,F1_B,delta_F1,delta_F1_std,t_stat,t_corrected,p_standard,p_corrected,sig,Cohens_d,Wilcoxon_p
+A2_ExpertA_GBDT vs A1_EnhancedFeatures,0.5203,0.5812,0.0609,0.0085,16.04,10.69,0.000088,0.000434,***,7.17,0.0625
+A3_SelfOOF_Stacking vs A2_ExpertA_GBDT,0.5812,0.6212,0.0401,0.0077,11.59,7.73,0.000316,0.001509,**,5.18,0.0625
+A4_ExternalOOF vs A3_SelfOOF_Stacking,0.6212,0.8515,0.2303,0.0171,30.18,20.12,0.000007,0.000036,***,13.50,0.0625
+A5_FullPipeline vs A4_ExternalOOF,0.8515,0.8595,0.0080,0.0068,2.64,1.76,0.057827,0.153705,,1.18,0.0625

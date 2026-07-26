@@ -1,0 +1,284 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="ETD-SGCC Architecture" id="etd-sgcc">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1300" pageHeight="950">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ==================== TITLE ==================== -->
+        <mxCell id="title" value="ETD-SGCC Pipeline Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontColor=#1A237E;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="350" y="15" width="500" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ============ STAGE 1 ============ -->
+        <mxCell id="s1_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#37474F;strokeWidth=1.5;shadow=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="55" width="1180" height="145" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1_label" value="Stage 1:  Data Preprocessing &amp; Feature Engineering" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontColor=#37474F;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="50" y="60" width="400" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- Data + Preprocessing flow row -->
+        <mxCell id="data" value="SGCC Raw Data&#xa;42,372 x 1,035 days&#xa;theft 8.5% / miss 25.6%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontSize=10;fontColor=#0D47A1;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="55" y="90" width="145" height="55" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="a_d_imp" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#546E7A;strokeWidth=1.5;" edge="1" parent="1" source="data" target="imputation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="imputation" value="Imputation&#xa;3-layer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#E65100;strokeWidth=1.5;fontSize=9;fontColor=#BF360C;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="220" y="90" width="65" height="55" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="a_i_w" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#546E7A;strokeWidth=1.5;" edge="1" parent="1" source="imputation" target="winsorize">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="winsorize" value="Winsorize&#xa;+ log1p" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#E65100;strokeWidth=1.5;fontSize=9;fontColor=#BF360C;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="305" y="90" width="65" height="55" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="a_w_s" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#546E7A;strokeWidth=1.5;" edge="1" parent="1" source="winsorize" target="stl">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="stl" value="STL&#xa;Decomp&#xa;T=7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#E65100;strokeWidth=1.5;fontSize=9;fontColor=#BF360C;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="390" y="90" width="55" height="55" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="a_s_r" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#546E7A;strokeWidth=1.5;" edge="1" parent="1" source="stl" target="rolling">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rolling" value="Rolling&#xa;Feat" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#E65100;strokeWidth=1.5;fontSize=9;fontColor=#BF360C;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="465" y="90" width="60" height="55" as="geometry"/>
+        </mxCell>
+
+        <!-- Feature outputs (bottom row of stage 1) -->
+        <mxCell id="stat" value="Statistical Features&#xa;39 base + 15 missing patterns" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#283593;strokeWidth=1.5;fontSize=9;fontColor=#1A237E;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="55" y="155" width="160" height="38" as="geometry"/>
+        </mxCell>
+        <mxCell id="adv_feat" value="Advanced Features&#xa;FFT / behavioral / CUSUM / holiday" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#283593;strokeWidth=1.5;fontSize=9;fontColor=#1A237E;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="230" y="155" width="160" height="38" as="geometry"/>
+        </mxCell>
+        <mxCell id="mch" value="Multi-Channel Seq X_seq [N, 5, 1035]&#xa;(value / volatility / entropy / mask / residual)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#283593;strokeWidth=1.5;fontSize=9;fontColor=#1A237E;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="405" y="155" width="250" height="38" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="a_r_st" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;strokeColor=#78909C;strokeWidth=1;dashed=1;" edge="1" parent="1" source="rolling" target="stat">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a_r_adv" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;strokeColor=#78909C;strokeWidth=1;dashed=1;" edge="1" parent="1" source="rolling" target="adv_feat">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a_r_mch" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;strokeColor=#546E7A;strokeWidth=1.5;" edge="1" parent="1" source="rolling" target="mch">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ============ STAGE 2 ============ -->
+        <mxCell id="s2_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#37474F;strokeWidth=1.5;shadow=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="220" width="1180" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2_label" value="Stage 2:  Dual-Expert Training (5-Fold CV)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontColor=#37474F;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="50" y="225" width="400" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- Expert A panel -->
+        <mxCell id="expa_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;strokeWidth=1.5;dashed=1" vertex="1" parent="1">
+          <mxGeometry x="55" y="255" width="520" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="expa_title" value="Expert A: GBDT Ensemble" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontColor=#4A148C;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="65" y="260" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="expa_lgb" value="LightGBM&#xa;scale_pos_weight=10.72&#xa;max_depth=7, lr=0.05" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6A1B9A;strokeWidth=1.5;fontSize=8;fontColor=#4A148C;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="65" y="290" width="110" height="48" as="geometry"/>
+        </mxCell>
+        <mxCell id="expa_p1" value="+" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontColor=#6A1B9A;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="175" y="295" width="15" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="expa_xgb" value="XGBoost&#xa;scale_pos_weight=10.72&#xa;max_depth=7, lr=0.05" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6A1B9A;strokeWidth=1.5;fontSize=8;fontColor=#4A148C;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="192" y="290" width="110" height="48" as="geometry"/>
+        </mxCell>
+        <mxCell id="expa_p2" value="+" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontColor=#6A1B9A;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="302" y="295" width="15" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="expa_cat" value="CatBoost&#xa;Balanced weights&#xa;depth=7, lr=0.05" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6A1B9A;strokeWidth=1.5;fontSize=8;fontColor=#4A148C;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="319" y="290" width="110" height="48" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="expa_eq" value="Ensemble:  OOF_A = 0.4 LGB + 0.3 XGB + 0.3 CatB&#xa;Leaf_Indices [N, 200 trees]  passed to Expert B" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE7F6;strokeColor=#6A1B9A;strokeWidth=1;fontSize=9;fontColor=#311B92;fontStyle=1;fontFamily=Consolas" vertex="1" parent="1">
+          <mxGeometry x="65" y="350" width="364" height="42" as="geometry"/>
+        </mxCell>
+
+        <!-- Expert B panel -->
+        <mxCell id="expb_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;strokeWidth=1.5;dashed=1" vertex="1" parent="1">
+          <mxGeometry x="605" y="255" width="600" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="expb_title" value="Expert B: TCN + Leaf Embedding" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontColor=#4A148C;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="615" y="260" width="250" height="22" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="expb_tcn" value="TCN Encoder&#xa;[32, 32, 32, 16]&#xa;kernel=5, dilate=2^i&#xa;weight-norm + GELU" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6A1B9A;strokeWidth=1.5;fontSize=8;fontColor=#4A148C;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="615" y="290" width="105" height="58" as="geometry"/>
+        </mxCell>
+        <mxCell id="expb_leaf" value="Leaf Embedding&#xa;200 trees x 31 leaves&#xa;embed=4, proj=32&#xa;GELU + LayerNorm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6A1B9A;strokeWidth=1.5;fontSize=8;fontColor=#4A148C;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="735" y="290" width="120" height="58" as="geometry"/>
+        </mxCell>
+        <mxCell id="expb_gate" value="Gated Fusion&#xa;sigmoid gate + concat&#xa;classifier [128-&gt;32-&gt;1]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6A1B9A;strokeWidth=1.5;fontSize=8;fontColor=#4A148C;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="870" y="290" width="110" height="58" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="expb_loss" value="RecallOrientedFocalLoss (alpha=0.75, gamma=2.0, w_recall=3.0)&#xa;Optimizer: AdamW lr=5e-4 | Scheduler: CosineAnnealingLR | EarlyStop: patience=7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE7F6;strokeColor=#6A1B9A;strokeWidth=1;fontSize=8.5;fontColor=#311B92;fontFamily=Consolas" vertex="1" parent="1">
+          <mxGeometry x="615" y="358" width="365" height="36" as="geometry"/>
+        </mxCell>
+
+        <!-- Expert interconnects -->
+        <mxCell id="a_leaf_ex" value="Leaf_Indices" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.3;entryX=0;entryY=0.3;strokeColor=#7B1FA2;strokeWidth=1.5;dashed=1;fontSize=9;fontFamily=Times New Roman" edge="1" parent="1" source="expa_eq" target="expb_leaf">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a_prior_ex" value="OOF_A (prior)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.7;strokeColor=#7B1FA2;strokeWidth=1.5;dashed=1;fontSize=9;fontFamily=Times New Roman" edge="1" parent="1" source="expa_eq" target="expb_gate">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Input arrows to experts -->
+        <mxCell id="a_stat_expa" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.15;entryY=0;strokeColor=#546E7A;strokeWidth=1.5;" edge="1" parent="1" source="stat" target="expa_box">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a_mch_expb" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.85;entryY=0;strokeColor=#546E7A;strokeWidth=1.5;" edge="1" parent="1" source="mch" target="expb_box">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ============ STAGE 3 ============ -->
+        <mxCell id="s3_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#37474F;strokeWidth=1.5;shadow=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="440" width="1180" height="400" as="geometry"/>
+        </mxCell>
+        <mxCell id="s3_label" value="Stage 3:  MegaMetaLearner — Multi-Source OOF Stacking" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontColor=#37474F;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="50" y="445" width="500" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- Row 1: OOF Sources (horizontal) -->
+        <mxCell id="oof_pipe" value="Pipeline OOFs&#xa;Expert A (GBDT)&#xa;Expert B (TCN+Leaf)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="55" y="475" width="150" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="oof_new" value="Feature Experts&#xa;LGB-new / XGB-new&#xa;CatB-new / RF-new" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="220" y="475" width="130" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="oof_int" value="Internal Archives&#xa;TCN-KD / Stacker / Blend&#xa;HillClimb / Super-GBDT" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="365" y="475" width="135" height="65" as="geometry"/>
+        </mxCell>
+
+        <!-- External OOF - major emphasis -->
+        <mxCell id="oof_ext" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2" vertex="1" parent="1">
+          <mxGeometry x="515" y="475" width="350" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="oof_ext_t" value="External OOFs (ThiefElectricity project, best F1=0.8457):" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="522" y="478" width="300" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="oof_ext_l" value="V71: 5 base models  |  V213/V216: stacking intermediates  |  V219: later stack  |  V225: best stack  |  V229: calibrated" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=8;fontColor=#B71C1C;fontFamily=Consolas" vertex="1" parent="1">
+          <mxGeometry x="522" y="498" width="336" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="oof_pool" value="Feature Pool&#xa;stat + advanced&#xa;+ autoencoder&#xa;+ miss_ratio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="880" y="475" width="120" height="65" as="geometry"/>
+        </mxCell>
+
+        <!-- Arrow: pool -> new -->
+        <mxCell id="a_pool_new" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;strokeColor=#78909C;strokeWidth=1;dashed=1;" edge="1" parent="1" source="oof_pool" target="oof_new">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Stacking main box -->
+        <mxCell id="stack_main" value="OOF Matrix P [N x K]  assembled from all sources" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#1B5E20;strokeWidth=2;fontSize=11;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman;shadow=1" vertex="1" parent="1">
+          <mxGeometry x="55" y="560" width="300" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- 7 meta-learners row -->
+        <mxCell id="ml_models" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5" vertex="1" parent="1">
+          <mxGeometry x="55" y="605" width="660" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml_models_t" value="6 Meta-Learners + SimpleAvg  (5-fold CV, select best by F1)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="55" y="605" width="660" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ml1" value="XGB-d4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1B5E20;strokeWidth=1.5;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="65" y="628" width="72" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml2" value="XGB-d3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1B5E20;strokeWidth=1.5;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="147" y="628" width="72" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml3" value="LR-C1.0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1B5E20;strokeWidth=1.5;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="229" y="628" width="72" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml4" value="LR-C0.5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1B5E20;strokeWidth=1.5;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="311" y="628" width="72" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml5" value="LGB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1B5E20;strokeWidth=1.5;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="393" y="628" width="72" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml6" value="HistGB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1B5E20;strokeWidth=1.5;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="475" y="628" width="72" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml7" value="Avg" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#1B5E20;strokeWidth=1.5;fontSize=9;fontColor=#1B5E20;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="557" y="628" width="72" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- OOF -> Stacking arrows -->
+        <mxCell id="a_oof1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.15;entryY=0;strokeColor=#2E7D32;strokeWidth=1;dashed=1;" edge="1" parent="1" source="oof_pipe" target="stack_main">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a_oof2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.35;entryY=0;strokeColor=#2E7D32;strokeWidth=1;dashed=1;" edge="1" parent="1" source="oof_new" target="stack_main">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a_oof3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#2E7D32;strokeWidth=1;dashed=1;" edge="1" parent="1" source="oof_int" target="stack_main">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a_oof4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.65;entryY=0;strokeColor=#2E7D32;strokeWidth=1;dashed=1;" edge="1" parent="1" source="oof_ext" target="stack_main">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a_oof5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.85;entryY=0;strokeColor=#2E7D32;strokeWidth=1;dashed=1;" edge="1" parent="1" source="oof_pool" target="stack_main">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Stacking -> Meta arrow -->
+        <mxCell id="a_stack_ml" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#1B5E20;strokeWidth=1.5;" edge="1" parent="1" source="stack_main" target="ml_models">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Output panel (right side) -->
+        <mxCell id="output_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;shadow=1" vertex="1" parent="1">
+          <mxGeometry x="740" y="560" width="460" height="125" as="geometry"/>
+        </mxCell>
+        <mxCell id="output_t" value="Final Outputs &amp; Evaluation" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontColor=#0D47A1;fontStyle=1;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="740" y="560" width="460" height="22" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="output_met" value="oof_proba_meta (best stacking) | best_F1 / threshold / AUC / Confusion Matrix" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1565C0;strokeWidth=1;fontSize=9;fontColor=#0D47A1;fontFamily=Consolas" vertex="1" parent="1">
+          <mxGeometry x="750" y="590" width="440" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="output_vis" value="Visualization: PR Curve / ROC Curve / Component Comparison" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1565C0;strokeWidth=1;fontSize=9;fontColor=#0D47A1;fontFamily=Consolas" vertex="1" parent="1">
+          <mxGeometry x="750" y="632" width="440" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="output_abl" value="Ablation: Expert A vs B vs Meta | SimpleAvg | Recall-constrained 90.5%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1565C0;strokeWidth=1;fontSize=9;fontColor=#0D47A1;fontFamily=Consolas" vertex="1" parent="1">
+          <mxGeometry x="750" y="658" width="440" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- Arrow: stack -> output -->
+        <mxCell id="a_stack_out" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#1565C0;strokeWidth=2;" edge="1" parent="1" source="stack_main" target="output_box">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Arrow: ml -> output (meta results finalize evaluation) -->
+        <mxCell id="a_ml_out" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.8;strokeColor=#1B5E20;strokeWidth=1.5;dashed=1;" edge="1" parent="1" source="ml_models" target="output_box">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#B0BEC5;strokeWidth=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="870" width="880" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend" value="Legend: gray=stage bg | blue=data | orange=preprocess | purple=expert model | green=OOF/stacking | red=external version info | solid=feature/data flow | dashed=metadata/prior" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#37474F;fontFamily=Times New Roman" vertex="1" parent="1">
+          <mxGeometry x="40" y="870" width="880" height="28" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

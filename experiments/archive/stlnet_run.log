@@ -1,0 +1,298 @@
+============================================================
+  STL-Net Reproduction on SGCC
+  Target: F1=94.47%, AUC=0.9869
+============================================================
+[1] Loading SGCC raw data...
+    Shape: (42372, 1034), Theft: 3615/42372 (8.53%)
+    Missing: 25.64% | Time: 25.8s
+[2] Hybrid imputation (sparsity-gated: linear interp + median)...
+    Sparse cols (>30% miss): 584 | Dense cols (<=30%): 450
+    [1/3] Median imputation for 584 sparse cols ✓
+    [2/3] Linear interpolation for 450 dense cols ✓
+    [Fallback] Filling 8550 remaining NaN with column medians...
+    [3/3] Median clipping (5×MAD) ✓
+    Total: 24.5s | Remaining NaN: 0
+    Imputed data saved to stlnet_imputed.npy
+[3] PAA compression: 1034 → 50 segments...
+    PAA shape: (42372, 50) | Time: 2.6s
+
+============================================================
+[4] 10-Fold Stratified Cross-Validation
+============================================================
+
+──────────────────────────────────────────────────
+  Fold 1/10
+──────────────────────────────────────────────────
+  [a] SMOTE-Tomek balancing (before: 3253/38134)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (69688, 50) | Time: 0.3s
+      After SMOTE-Tomek: 34844/69688 (theft=50.0%)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (4238, 50) | Time: 0.0s
+  [b] MI feature selection → top 30
+      Selected feature indices: [3 4 1 5 0]...[14 12 11]
+  [c] NSGA-II hyperparameter tuning (pop=12, gen=5)...
+    NSGA-II xgb: AUC=0.9407, complexity=5.512 ← knee-point
+    NSGA-II lgb: AUC=0.9228, complexity=5.000 ← knee-point
+    NSGA-II catboost: AUC=0.8856, complexity=4.972 ← knee-point
+    NSGA-II ngboost: AUC=0.5000, complexity=4.060 ← knee-point
+      NSGA-II done in 3371s
+      Params saved to stlnet_nsga2_params.json
+  [d] Training 4 base learners...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+      xgb     : AUC=0.7090, F1=0.3188
+      lgb     : AUC=0.7127, F1=0.2985
+      catboost: AUC=0.7260, F1=0.2936
+  [e] Fitting XGBoost meta-learner...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+  ── Fold 1 ──
+     F1=0.3024  AUC=0.6885  Prec=0.2657  Recall=0.3508
+     Acc=0.8617  Kappa=0.2273  MCC=0.2300
+     Threshold=0.64  Time=3569s
+
+──────────────────────────────────────────────────
+  Fold 2/10
+──────────────────────────────────────────────────
+  [a] SMOTE-Tomek balancing (before: 3253/38134)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (69674, 50) | Time: 0.1s
+      After SMOTE-Tomek: 34837/69674 (theft=50.0%)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (4238, 50) | Time: 0.0s
+  [b] MI feature selection → top 30
+      Selected feature indices: [3 4 1 5 0]...[16 13 11]
+  [c] Using NSGA-II params from fold 1
+  [d] Training 4 base learners...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+      xgb     : AUC=0.7150, F1=0.3106
+      lgb     : AUC=0.7093, F1=0.3065
+      catboost: AUC=0.7158, F1=0.3047
+  [e] Fitting XGBoost meta-learner...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+  ── Fold 2 ──
+     F1=0.3050  AUC=0.6980  Prec=0.2824  Recall=0.3315
+     Acc=0.8709  Kappa=0.2343  MCC=0.2352
+     Threshold=0.67  Time=31s
+
+──────────────────────────────────────────────────
+  Fold 3/10
+──────────────────────────────────────────────────
+  [a] SMOTE-Tomek balancing (before: 3253/38135)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (69684, 50) | Time: 0.0s
+      After SMOTE-Tomek: 34842/69684 (theft=50.0%)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (4237, 50) | Time: 0.0s
+  [b] MI feature selection → top 30
+      Selected feature indices: [5 4 3 1 0]...[13 14 11]
+  [c] Using NSGA-II params from fold 1
+  [d] Training 4 base learners...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+      xgb     : AUC=0.7122, F1=0.3110
+      lgb     : AUC=0.7102, F1=0.3038
+      catboost: AUC=0.7336, F1=0.3072
+  [e] Fitting XGBoost meta-learner...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+  ── Fold 3 ──
+     F1=0.2907  AUC=0.6867  Prec=0.2510  Recall=0.3453
+     Acc=0.8560  Kappa=0.2128  MCC=0.2162
+     Threshold=0.62  Time=31s
+
+──────────────────────────────────────────────────
+  Fold 4/10
+──────────────────────────────────────────────────
+  [a] SMOTE-Tomek balancing (before: 3253/38135)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (69680, 50) | Time: 0.1s
+      After SMOTE-Tomek: 34840/69680 (theft=50.0%)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (4237, 50) | Time: 0.0s
+  [b] MI feature selection → top 30
+      Selected feature indices: [3 1 0 4 5]...[14 12 11]
+  [c] Using NSGA-II params from fold 1
+  [d] Training 4 base learners...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+      xgb     : AUC=0.7117, F1=0.3132
+      lgb     : AUC=0.7220, F1=0.3258
+      catboost: AUC=0.7235, F1=0.3036
+  [e] Fitting XGBoost meta-learner...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+  ── Fold 4 ──
+     F1=0.3315  AUC=0.7052  Prec=0.3371  Recall=0.3260
+     Acc=0.8877  Kappa=0.2702  MCC=0.2702
+     Threshold=0.81  Time=30s
+
+──────────────────────────────────────────────────
+  Fold 5/10
+──────────────────────────────────────────────────
+  [a] SMOTE-Tomek balancing (before: 3253/38135)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (69678, 50) | Time: 0.0s
+      After SMOTE-Tomek: 34839/69678 (theft=50.0%)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (4237, 50) | Time: 0.0s
+  [b] MI feature selection → top 30
+      Selected feature indices: [7 3 5 4 0]...[16 13 11]
+  [c] Using NSGA-II params from fold 1
+  [d] Training 4 base learners...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+      xgb     : AUC=0.7197, F1=0.2970
+      lgb     : AUC=0.7404, F1=0.3114
+      catboost: AUC=0.7261, F1=0.2982
+  [e] Fitting XGBoost meta-learner...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+  ── Fold 5 ──
+     F1=0.3101  AUC=0.7098  Prec=0.3262  Recall=0.2956
+     Acc=0.8877  Kappa=0.2492  MCC=0.2495
+     Threshold=0.86  Time=23s
+
+──────────────────────────────────────────────────
+  Fold 6/10
+──────────────────────────────────────────────────
+  [a] SMOTE-Tomek balancing (before: 3254/38135)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (69694, 50) | Time: 0.0s
+      After SMOTE-Tomek: 34847/69694 (theft=50.0%)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (4237, 50) | Time: 0.0s
+  [b] MI feature selection → top 30
+      Selected feature indices: [3 4 1 5 0]...[13 16 11]
+  [c] Using NSGA-II params from fold 1
+  [d] Training 4 base learners...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+      xgb     : AUC=0.7355, F1=0.3385
+      lgb     : AUC=0.7375, F1=0.3261
+      catboost: AUC=0.7444, F1=0.3253
+  [e] Fitting XGBoost meta-learner...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+  ── Fold 6 ──
+     F1=0.3264  AUC=0.7145  Prec=0.3260  Recall=0.3269
+     Acc=0.8851  Kappa=0.2636  MCC=0.2636
+     Threshold=0.81  Time=21s
+
+──────────────────────────────────────────────────
+  Fold 7/10
+──────────────────────────────────────────────────
+  [a] SMOTE-Tomek balancing (before: 3254/38135)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (69698, 50) | Time: 0.0s
+      After SMOTE-Tomek: 34849/69698 (theft=50.0%)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (4237, 50) | Time: 0.0s
+  [b] MI feature selection → top 30
+      Selected feature indices: [4 1 3 5 0]...[18 13 11]
+  [c] Using NSGA-II params from fold 1
+  [d] Training 4 base learners...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+      xgb     : AUC=0.7543, F1=0.3395
+      lgb     : AUC=0.7616, F1=0.3336
+      catboost: AUC=0.7626, F1=0.3204
+  [e] Fitting XGBoost meta-learner...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+  ── Fold 7 ──
+     F1=0.3377  AUC=0.7396  Prec=0.3224  Recall=0.3546
+     Acc=0.8815  Kappa=0.2728  MCC=0.2732
+     Threshold=0.79  Time=21s
+
+──────────────────────────────────────────────────
+  Fold 8/10
+──────────────────────────────────────────────────
+  [a] SMOTE-Tomek balancing (before: 3254/38135)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (69688, 50) | Time: 0.0s
+      After SMOTE-Tomek: 34844/69688 (theft=50.0%)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (4237, 50) | Time: 0.0s
+  [b] MI feature selection → top 30
+      Selected feature indices: [7 4 0 5 1]...[16 14 11]
+  [c] Using NSGA-II params from fold 1
+  [d] Training 4 base learners...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+      xgb     : AUC=0.6938, F1=0.2760
+      lgb     : AUC=0.6958, F1=0.2848
+      catboost: AUC=0.6991, F1=0.2926
+  [e] Fitting XGBoost meta-learner...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+  ── Fold 8 ──
+     F1=0.2822  AUC=0.6797  Prec=0.2246  Recall=0.3795
+     Acc=0.8355  Kappa=0.1961  MCC=0.2048
+     Threshold=0.37  Time=21s
+
+──────────────────────────────────────────────────
+  Fold 9/10
+──────────────────────────────────────────────────
+  [a] SMOTE-Tomek balancing (before: 3254/38135)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (69676, 50) | Time: 0.0s
+      After SMOTE-Tomek: 34838/69676 (theft=50.0%)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (4237, 50) | Time: 0.0s
+  [b] MI feature selection → top 30
+      Selected feature indices: [4 3 5 1 0]...[14 13 11]
+  [c] Using NSGA-II params from fold 1
+  [d] Training 4 base learners...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+      xgb     : AUC=0.7243, F1=0.3121
+      lgb     : AUC=0.7222, F1=0.3148
+      catboost: AUC=0.7278, F1=0.2893
+  [e] Fitting XGBoost meta-learner...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+  ── Fold 9 ──
+     F1=0.3141  AUC=0.7022  Prec=0.3047  Recall=0.3241
+     Acc=0.8794  Kappa=0.2480  MCC=0.2482
+     Threshold=0.80  Time=21s
+
+──────────────────────────────────────────────────
+  Fold 10/10
+──────────────────────────────────────────────────
+  [a] SMOTE-Tomek balancing (before: 3254/38135)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (69688, 50) | Time: 0.0s
+      After SMOTE-Tomek: 34844/69688 (theft=50.0%)
+[3] PAA compression: 50 → 50 segments...
+    PAA shape: (4237, 50) | Time: 0.0s
+  [b] MI feature selection → top 30
+      Selected feature indices: [4 5 3 1 0]...[14 12 11]
+  [c] Using NSGA-II params from fold 1
+  [d] Training 4 base learners...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+      xgb     : AUC=0.7298, F1=0.3162
+      lgb     : AUC=0.7206, F1=0.3106
+      catboost: AUC=0.7258, F1=0.3258
+  [e] Fitting XGBoost meta-learner...
+    NGBoost failed: NGBClassifier.__init__() got an unexpected keyword argument 'Distribution', skipping
+  ── Fold 10 ──
+     F1=0.3096  AUC=0.7098  Prec=0.3423  Recall=0.2825
+     Acc=0.8926  Kappa=0.2519  MCC=0.2533
+     Threshold=0.87  Time=21s
+
+============================================================
+  STL-Net REPRODUCTION - 10-Fold CV Results
+============================================================
+  f1        : 0.3110 ± 0.0165
+  auc       : 0.7034 ± 0.0162
+  precision : 0.2982 ± 0.0382
+  recall    : 0.3317 ± 0.0268
+  accuracy  : 0.8738 ± 0.0170
+  kappa     : 0.2426 ± 0.0237
+  mcc       : 0.2444 ± 0.0216
+
+  ── Per-Model (averaged over folds) ──
+  xgb     : AUC=0.7205 ± 0.0158, F1=0.3133
+  lgb     : AUC=0.7232 ± 0.0179, F1=0.3116
+  catboost: AUC=0.7285 ± 0.0159, F1=0.3061
+
+  ── Comparison with STL-Net paper ──
+  f1        : paper=0.9447  ours=0.3110  Δ=-0.6337  ❌
+  auc       : paper=0.9869  ours=0.7034  Δ=-0.2835  ❌
+  precision : paper=0.9285  ours=0.2982  Δ=-0.6303  ❌
+  recall    : paper=0.9616  ours=0.3317  Δ=-0.6299  ❌
+  accuracy  : paper=0.9438  ours=0.8738  Δ=-0.0700  ❌
+  kappa     : paper=0.8875  ours=0.2426  Δ=-0.6449  ❌
+  mcc       : paper=0.8881  ours=0.2444  Δ=-0.6437  ❌
+
+  Results saved to stlnet_results_20260620_155227.json
+
+============================================================
+  TOTAL TIME: 64.1 min
+============================================================

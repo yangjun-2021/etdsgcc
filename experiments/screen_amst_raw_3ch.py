@@ -1,0 +1,111 @@
+"""Quick single-split screen of AMST on raw-scale 3ch input."""
+import os
+import sys
+import time
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
+
+from config import OUTPUT_DIR, SEED
+from src.utils.utils import seed_everything
+from src.training.amst_trainer import AMSTTrainer
+from src.models.amst_net import AMSTNet
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import f1_score, recall_score, precision_score, roc_auc_score
+import numpy as np
+import torch
+
+seed_everything(SEED)
+
+print(f'PyTorch: {torch.__version__}')
+print(f'CUDA available: {torch.cuda.is_available()}')
+if torch.cuda.is_available():
+    print(f'GPU: {torch.cuda.get_device_name(0)}')
+
+pre = np.load(os.path.join(OUTPUT_DIR, 'sgcc_preprocessed_raw_3ch.npz'))
+X_seq = pre['X_seq']
+flags = pre['flags']
+
+prior_data = np.load(os.path.join(OUTPUT_DIR, 'strong_gbdt_prior.npz'))
+oof_prior = prior_data['prior']
+
+train_idx, val_idx = train_test_split(
+    np.arange(len(flags)), test_size=0.2, random_state=SEED, stratify=flags)
+
+trainer_kwargs = dict(
+    dataset='sgcc',
+    use_diffaug=False,
+    use_supcon=False,
+    use_coteaching=False,
+    use_prior=True,
+    d_mamba=64,
+    d_trans=128,
+    d_freq=64,
+    proj_dim=128,
+    n_mamba_layers=2,
+    n_trans_layers=2,
+    n_heads=4,
+    dropout=0.2,
+    epochs=50,
+    batch_size=64,
+    lr=1e-4,
+    patience=15,
+    recall_weight=5.0,
+    use_amp=True,
+)
+
+trainer = AMSTTrainer(device='cuda', **trainer_kwargs)
+X_train, y_train = X_seq[train_idx], flags[train_idx]
+X_val, y_val = X_seq[val_idx], flags[val_idx]
+prior_train = oof_prior[train_idx]
+prior_val = oof_prior[val_idx]
+
+X_train_aug, y_train_aug = trainer._augment(X_train, y_train)
+prior_train_aug = np.concatenate([
+    prior_train,
+    np.full(len(y_train_aug) - len(y_train), prior_train.mean(), dtype=np.float32)
+])
+
+train_loader = trainer._build_loaders(X_train_aug, y_train_aug, prior=prior_train_aug, shuffle=True)
+val_loader = trainer._build_loaders(X_val, y_val, prior=prior_val, shuffle=False)
+
+model = AMSTNet(
+    in_channels=X_seq.shape[1],
+    seq_len=X_seq.shape[2],
+    d_mamba=trainer.d_mamba,
+    d_trans=trainer.d_trans,
+    d_freq=trainer.d_freq,
+    proj_dim=trainer.proj_dim,
+    n_mamba_layers=trainer.n_mamba_layers,
+    n_trans_layers=trainer.n_trans_layers,
+    n_heads=trainer.n_heads,
+    dropout=trainer.dropout,
+    use_freq=True,
+    use_supcon=trainer.use_supcon,
+    prior_dim=1,
+)
+print(f'Model params: {sum(p.numel() for p in model.parameters()):,}')
+
+t0 = time.time()
+model = trainer._train_single_network(
+    model, train_loader, val_loader, y_val,
+    epochs=trainer.epochs, lr=trainer.lr, weight_decay=trainer.weight_decay,
+    patience=trainer.patience, fold_idx=0
+)
+val_proba = trainer._predict_proba(model, val_loader)
+
+best_f1, best_th = 0, 0.5
+for th in np.arange(0.05, 0.95, 0.005):
+    pred = (val_proba > th).astype(int)
+    if pred.sum() == 0:
+        continue
+    f = f1_score(y_val, pred, zero_division=0)
+    if f > best_f1:
+        best_f1, best_th = f, th
+pred = (val_proba > best_th).astype(int)
+print(f'\nVal: F1={f1_score(y_val, pred):.4f}, Rec={recall_score(y_val, pred):.4f}, '
+      f'Prec={precision_score(y_val, pred, zero_division=0):.4f}, '
+      f'AUC={roc_auc_score(y_val, val_proba):.4f}, th={best_th:.3f}, time={(time.time()-t0)/60:.1f}min')

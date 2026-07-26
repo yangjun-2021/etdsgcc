@@ -1,0 +1,18 @@
+{"type":"config","name":"sgcc-f1","metricName":"f1","metricUnit":"","bestDirection":"higher"}
+{"run":1,"commit":"b8e18c5","metric":0.9557,"metrics":{"auc":0.9992,"recall":0.9293,"precision":0.9836},"status":"keep","description":"baseline ImprovedMetaLearner v2","timestamp":1783952992,"segment":0}
+{"run":2,"commit":"ce5c8b4","metric":0.9557,"metrics":{"auc":0.9992,"recall":0.9293,"precision":0.9836},"status":"discard","description":"top_k=100 corr=1.0 max_size=20 n_cands=15","timestamp":1783953272,"segment":0}
+{"run":3,"commit":"1d21568","metric":0,"metrics":{"auc":0,"recall":0,"precision":0},"status":"crash","description":"finer threshold grid 0.001 step (timeout)","timestamp":1783953634,"segment":0}
+{"run":4,"commit":"1d21568","metric":0.9557,"metrics":{"auc":0.9992,"recall":0.9293,"precision":0.9836},"status":"discard","description":"local threshold refinement around coarse best threshold","timestamp":1783953840,"segment":0}
+{"run":5,"commit":"1d21568","metric":0,"metrics":{"auc":0,"recall":0,"precision":0},"status":"crash","description":"multi-seed greedy ensemble (n_seeds=5 timeout)","timestamp":1783954241,"segment":0}
+{"type": "config", "name": "sgcc-f1-original", "metricName": "f1", "metricUnit": "", "bestDirection": "higher"}
+{"run": 6, "commit": "b22941b", "metric": 0.8657, "metrics": {"auc": 0.9874, "recall": 0.8382, "precision": 0.8951}, "status": "keep", "description": "baseline on original labels", "timestamp": 1783955433, "segment": 1}
+{"run":7,"commit":"7857c74","metric":0.8657,"metrics":{"auc":0.9874,"recall":0.8382,"precision":0.8951},"status":"discard","description":"top_k=100 corr=0.9995 on original labels","timestamp":1783955690,"segment":1}
+{"run":8,"commit":"7857c74","metric":0.8657,"metrics":{"auc":0.9874,"recall":0.8382,"precision":0.8951},"status":"discard","description":"add MLP meta-learner on original labels","timestamp":1783955879,"segment":1}
+{"run":9,"commit":"7857c74","metric":0.8657,"metrics":{"auc":0.9874,"recall":0.8382,"precision":0.8951},"status":"discard","description":"aggressive corr pruning 0.99 on original labels","timestamp":1783956037,"segment":1}
+{"run":10,"commit":"c794be1","metric":0.8657,"metrics":{"auc":0.9874,"recall":0.8382,"precision":0.8951},"status":"discard","description":"confident-learning weighted meta-learners on original labels","timestamp":1783956347,"segment":1}
+{"run":11,"commit":"c3731d9","metric":0.8657,"metrics":{"auc":0.9874,"recall":0.8382,"precision":0.8951},"status":"discard","description":"consensus pseudo-label meta-learners on original labels","timestamp":1783956586,"segment":1}
+{"run":12,"commit":"4cb5091","metric":0.8657,"metrics":{"auc":0.9874,"recall":0.8382,"precision":0.8951},"status":"discard","description":"add hard-negative rescue OOF (XGB on FN mask)","timestamp":1783956882,"segment":1}
+{"run":13,"commit":"2a5bec5","metric":0.8657,"metrics":{"auc":0.9874,"recall":0.8382,"precision":0.8951},"status":"discard","description":"retrain Expert A on original labels and add its OOF","timestamp":1783958006,"segment":1}
+{"run":14,"commit":"8dd654f","metric":0.8657,"metrics":{"auc":0.9874,"recall":0.8382,"precision":0.8951},"status":"discard","description":"add co-teaching TCN OOF trained on original labels","timestamp":1783990525,"segment":1}
+{"run":15,"commit":"e68870b","metric":0.8657,"metrics":{"auc":0.9874,"recall":0.8382,"precision":0.8951},"status":"discard","description":"add AMST original-label co-teaching OOF","timestamp":1784011881,"segment":1}
+{"run":16,"commit":"30fe81a","metric":0.8657,"metrics":{"auc":0.9874,"recall":0.8382,"precision":0.8951},"status":"discard","description":"add strong GBDT prior trained on original labels","timestamp":1784012193,"segment":1}

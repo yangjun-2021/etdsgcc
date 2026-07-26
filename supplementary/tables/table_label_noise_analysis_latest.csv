@@ -1,0 +1,6 @@
+Metric,Count,Percentage
+Total Errors,939,2.22
+Likely Label Noise (orig != clean),583,62.09
+True Model Errors (orig == clean),356,37.91
+Hard FN,306,85.96
+Hard FP,50,14.04
