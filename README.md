@@ -80,7 +80,8 @@ See [`supplementary/README.md`](supplementary/README.md) for detailed documentat
 
 | Label Source | F1 | AUC | Recall | Precision |
 |-------------|-----|------|--------|-----------|
-| Original (honest) | 0.8657 | 0.9874 | 0.8382 | 0.8951 |
+| Original labels (usage-quintile subgroup thresholds, paper Table 3) | 0.8666 | 0.9874 | 0.8409 | 0.8939 |
+| Original labels (single global threshold θ≈0.565) | 0.8657 | 0.9874 | 0.8382 | 0.8951 |
 | Cleaned v3 (committee) | 0.8561 | — | — | — |
 
-The inflated F1≈0.95 previously reported was caused by circular label cleaning using self-consensus labels. All supplementary data includes original labels for honest evaluation.
+The inflated F1≈0.95 previously reported was caused by circular label cleaning using self-consensus labels. All supplementary data includes original labels for honest evaluation. The headline result reported in the paper (F1=0.8666) uses per-usage-quintile optimized thresholds applied to the pooled 5-fold OOF predictions; the single-global-threshold evaluation gives F1=0.8657. Both protocols are reproducible from `supplementary/oof_pool/final_blend_best_oof.npz` (`thresholds` + `use_subgroup=True`) and `output/usage_features.npz`.

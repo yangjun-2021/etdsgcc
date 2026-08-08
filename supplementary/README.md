@@ -56,6 +56,6 @@ y_clean = labels['y_clean']  # consensus-cleaned (self-refined, inflated metrics
 
 ## Notes
 
-- F1=0.8657 on original labels is the honest baseline; F1≈0.95 on cleaned labels is inflated by circular label refinement.
+- The paper headline result on original labels is F1=0.8666 (usage-quintile subgroup thresholds, pooled 5-fold OOF); the single-global-threshold counterpart is F1=0.8657. F1≈0.95 on cleaned labels is inflated by circular label refinement.
 - All 5-fold CV results use SEED=42 and stratified splits.
 - The `ablation_oofs.npz` contains OOF predictions from all 6 ablation stages (A0–A6) for direct comparison.
